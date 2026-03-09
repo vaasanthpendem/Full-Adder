@@ -1,42 +1,29 @@
-module FA_tb;
 
+interface FA_if;
 logic a,b,cin;
 logic sum,cout;
+endinterface
+
+module FA_tb;
+FA_if tb_if();
 
 FullAdder dut(
-    .a(a),
-    .b(b),
-    .cin(cin),
-    .sum(sum),
-    .cout(cout)
+    .a(tb_if.a),
+    .b(tb_if.b),
+    .cin(tb_if.cin),
+    .sum(tb_if.sum),
+    .cout(tb_if.cout)
 );
 
 initial begin
-    $display("A B Cin | Sum Cout");
-
-    a=0; b=0; cin=0; #1;
-    $display("%0b %0b %0b | %0b %0b",a,b,cin,sum,cout);
-
-    a=0; b=0; cin=1; #1;
-    $display("%0b %0b %0b | %0b %0b",a,b,cin,sum,cout);
-
-    a=0; b=1; cin=0; #1;
-    $display("%0b %0b %0b | %0b %0b",a,b,cin,sum,cout);
-
-    a=0; b=1; cin=1; #1;
-    $display("%0b %0b %0b | %0b %0b",a,b,cin,sum,cout);
-
-    a=1; b=0; cin=0; #1;
-    $display("%0b %0b %0b | %0b %0b",a,b,cin,sum,cout);
-
-    a=1; b=0; cin=1; #1;
-    $display("%0b %0b %0b | %0b %0b",a,b,cin,sum,cout);
-
-    a=1; b=1; cin=0; #1;
-    $display("%0b %0b %0b | %0b %0b",a,b,cin,sum,cout);
-
-    a=1; b=1; cin=1; #1;
-    $display("%0b %0b %0b | %0b %0b",a,b,cin,sum,cout);
+    $dumpfile("dump.vcd");
+    $dumpvars;
+     
+    tb_if.a=0;tb_if.b=0;tb_if.cin=1;#10
+    tb_if.a=0;tb_if.b=1;tb_if.cin=1;#10
+    tb_if.a=1;tb_if.b=0;tb_if.cin=0;#10
+    tb_if.a=1;tb_if.b=1;tb_if.cin=0;#10
+    tb_if.a=1;tb_if.b=1;tb_if.cin=1;#10
 
     $finish;
 end
